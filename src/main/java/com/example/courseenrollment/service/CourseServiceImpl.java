@@ -1,4 +1,4 @@
-package com.example.courseenrollment.services;
+package com.example.courseenrollment.service;
 
 import com.example.courseenrollment.dto.CourseDTO;
 import com.example.courseenrollment.exception.ResourceNotFoundException;
@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CourseService {
+class courseService {
     private final CourseRepository repo;
 
-    public CourseService(CourseRepository repo) { this.repo = repo; }
+    public courseService(CourseRepository repo) { this.repo = repo; }
 
     public List<CourseDTO> getAll() {
         return repo.findAll().stream().map(this::toDto).collect(Collectors.toList());

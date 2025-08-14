@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/lessons")
 public class LessonController {
@@ -24,9 +23,10 @@ public class LessonController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Lesson> getById(@PathVariable Integer id) {
-        Optional<Lesson> l = repo.findById(id);
-        return l.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Lesson> getById(@PathVariable Long id) {
+        return repo.findById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -41,18 +41,20 @@ public class LessonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Lesson> update(@PathVariable Integer id, @RequestBody Lesson lesson) {
-        return repo.findById(id).map(existing -> {
-            existing.setTitle(lesson.getTitle());
-            existing.setContent(lesson.getContent());
-            existing.setCourseId(lesson.getCourseId());
-            repo.save(existing);
-            return ResponseEntity.ok(existing);
-        }).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Lesson> update(@PathVariable Long id, @RequestBody Lesson lesson) {
+        return repo.findById(id)
+                .map(existing -> {
+                    existing.setTitle(lesson.getTitle());
+                    existing.setContent(lesson.getContent());
+                    existing.setCourseId(lesson.getCourseId());
+                    repo.save(existing);
+                    return ResponseEntity.ok(existing);
+                })
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         if (repo.existsById(id)) {
             repo.deleteById(id);
             return ResponseEntity.noContent().build();
