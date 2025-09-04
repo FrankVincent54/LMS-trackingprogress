@@ -1,0 +1,82 @@
+.my-hero {
+  background: linear-gradient(to right, rgb(104, 104, 195), rgb(154, 97, 154));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 32px;
+  border-radius: 12px;
+}
+.left {
+    font-weight: normal;
+}
+.right {
+    margin-top: 12px;
+    padding: 6px;
+}
+
+/* styling the nav height */
+.my-navHeight {
+    min-height: 100vh;
+    height: auto;
+}
+
+/* styling the flex thing */
+.my-flex {
+    border-radius: 12px;
+}
+.my-flex button {
+    width: 12rem;
+    background-color: white;
+    color: black;
+    height: 1.8rem;
+    border-radius: 12px;
+    border: none;
+    padding: 1px;
+    font-weight: bold;
+}
+/* .my-flex button:hover {
+    background-color:rgb(104, 104, 195) ;
+} */
+
+.addCourse {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 12px;
+}
+.addCourse button {
+    width: 12rem;
+    background-color: black;
+    color: white;
+    height: 1.8rem;
+    border-radius: 12px;
+    border: none;
+    padding: 1px;
+}
+
+/* styling the courses card */
+.courses-card {
+    padding: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    border: 1px solid rgb(104, 104, 195);
+}
+.user-btn {display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 12px;
+}
+.user-btn button {
+    width: 12rem;
+    background-color: black;
+    color: white;
+    height: 1.8rem;
+    border-radius: 12px;
+    border: none;
+    padding: 1px;
+}
+
+.user-card {
+   border: 1px solid rgb(104, 104, 195);
+}

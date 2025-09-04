@@ -1,0 +1,51 @@
+.navHeight {
+    min-height: 100vh;
+    height: auto;
+    background-color: rgb(104, 104, 195);
+    border-radius: 12px;
+}
+
+.my-courses {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 12px;
+}
+.rght-crs p {
+    font-size: 20px;
+    font-weight: bold;
+}
+.lft-crs button {
+    width: 12rem;
+    background-color: black;
+    color: white;
+    height: 1.8rem;
+    border-radius: 12px;
+    border: none;
+    padding: 1px;
+}
+
+.activity-card {
+    border: none;
+    border-radius: 12px;
+    background-color: lavender;
+}
+.slv-card {
+    margin: 12px;
+    padding: 10px;
+    border: 2px solid rgb(216, 158, 48);
+    text-align: center;
+    border-radius: 10%;
+}
+.icon-card {
+   margin-left: 40%;
+   margin-top: 10%;
+}
+.slv-card h6 {
+    border-radius: 12px;
+    background-color: lightgray;
+    margin-top: 0px;
+    padding: 4px;
+    width: 5rem;
+    margin-left: 30%;
+}
