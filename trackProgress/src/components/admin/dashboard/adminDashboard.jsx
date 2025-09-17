@@ -16,6 +16,7 @@ import {
 import "./admiDashboard.css";
 import AllInstructors from "../../instructor/allInstructors/Instructors";
 import AllStudents from "../../student/allStudents.jsx";
+import AllCourses from "../../courses/allCourses/allCourses.jsx";
 
 
 export default function AdminDashBoard() {
@@ -212,15 +213,7 @@ export default function AdminDashBoard() {
                   <p>Course Performance Overview</p>
                   {/* <Button>Add Course</Button> */}
                 </div>
-
-                <Card className="courses-card mt-3">
-                  <CardTitle>React Development Fundamentals</CardTitle>
-                  <CardText>
-                    Course Description: <br />
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea neque
-                    repellendus cumque!
-                  </CardText>
-                </Card>
+                <AllCourses />
               </>
             )}
 
