@@ -58,7 +58,7 @@ export default function EditCourse () {
                         <Form onSubmit={updateCourse}>
                             <FormGroup controlId="title">
                                 <FormLabel> Course Title</FormLabel>
-                                <FormControl type="text" required
+                                <FormControl type="text" 
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value) }
                                  />
@@ -66,7 +66,7 @@ export default function EditCourse () {
 
                             <FormGroup controlId="description">
                                 <FormLabel>Course Description</FormLabel>
-                                <FormControl type="text" required
+                                <FormControl type="text"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value) }
                                  />

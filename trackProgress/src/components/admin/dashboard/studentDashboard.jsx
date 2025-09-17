@@ -252,6 +252,7 @@ import {
   ProgressBar,
   Button,
 } from "react-bootstrap";
+import AllCourses from "../../courses/allCourses/allCourses";
 
 export default function StudentDashBoard() {
   const [activeTab, setActiveTab] = useState("courses");
@@ -396,10 +397,7 @@ export default function StudentDashBoard() {
                   in Course
                 </Button>
               </div>
-              <Card className="m-1 p-2">
-                <CardTitle>React Development Fundamentals</CardTitle>
-                <CardText>Learn to build modern UIs using React.js</CardText>
-              </Card>
+                <AllCourses />
             </Col>
           )}
 
