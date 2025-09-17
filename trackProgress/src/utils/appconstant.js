@@ -1,5 +1,0 @@
-export const Admin_Base_Url = "http://localhost:8080/api/admins"
-export const Teacher_Base_Url = "http://localhost:8080/api/instructors"
-export const Student_Base_Url = "http://localhost:8080/api/students"
-export const Courses_Base_Url = "http://localhost:8080/api/courses"
-// export const Enrollments_Base_Url = "http://localhost:8080/api/enrollments"

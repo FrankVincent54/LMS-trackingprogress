@@ -1,11 +1,13 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
+  Alert,
   Button,
   Card,
   CardImg,
   CardText,
   CardTitle,
+  CardFooter,
   Col,
   Container,
   Navbar,
@@ -20,19 +22,118 @@ import {
   CheckCircleIcon,
   CircleStackIcon,
   ClockIcon,
+  PencilSquareIcon,
   PlusIcon,
   ShieldCheckIcon,
   Square3Stack3DIcon,
+  TrashIcon,
   TrophyIcon,
   UserGroupIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
+import { Link} from 'react-router';
 import "./admiDashboard.css";
+import "./instructorDAshboard.css";
 import { StarIcon } from "@heroicons/react/24/solid";
+import { courseClient } from "../../../utils/courses/coursesResponse/courseClient";
+import StudentDashBoard from "./studentDashboard";
+import { studentCLIENT } from "../../../utils/students/studentResponse";
+import { quizCLIENT } from "../../../utils/quiz/quizResponse";
 
 
 
 export default function InstructorDashBoard() {
+
+  // react hook to get courses as the page reloads
+  const [courses, setCourses] = useState([]);
+  const [success, setSuccess] = useState(false);
+
+  // student and quizzes constants
+  // const {id} = useParams()
+  const [students, setStudents] =  useState([])
+  const [quizzes, setQuizzes] = useState([])
+
+  useEffect(()=>{
+    fetchStudents()
+    allCourses()
+    fetchQuizzes()
+  },[])
+
+  // function to fetch all quizzes
+  function fetchQuizzes() {
+    quizCLIENT.get("quizzes")
+    .then((res)=>{
+      setQuizzes(res.data)
+    })
+    .catch((error)=>{
+      console.log("Failed to fetch quiz: ",error)
+    })
+  }
+
+  // function to delete quiz
+  function deleteQuiz (id) {
+    quizCLIENT.delete(`quizzes/${id}`)
+    .then(()=>{
+      fetchQuizzes();
+      console.log("Deleted successfully");
+    })
+    .catch((error)=>{
+      console.log("Failed to delete quiz: "+error)
+    })
+  }
+
+  // function to get all courses frim the backend
+  function allCourses () {
+    courseClient.get("courses")
+    .then((res)=>{
+      setCourses(res.data)
+    })
+    .catch((error)=>{
+      console.log("Failed to fetch courses: "+error)
+    })
+  }
+
+  // function to fetch all students
+  function fetchStudents () {
+      studentCLIENT.get("students")
+      .then((res)=> {
+        console.log(res.data)
+        setStudents(res.data)
+      })
+      .catch((error)=> {
+        console.log(error)
+      })
+  }
+
+  // function to delete course by id
+  function deleteCourse (e, id) {
+    e.preventDefault();
+    courseClient.delete(`/courses/${id}`)
+    .then((id)=>{
+      allCourses();
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000);
+      console.log("Successfully deleted course with id: ",id)
+    })
+    .catch((error)=>{
+      console.log("Error deleting:",error)
+    })
+  }
+
+  // function to delete student
+  function deleteStudent (e, id) {
+    e.preventDefault()
+    studentCLIENT.delete(`students/${id}`)
+    .then(()=>{
+      fetchStudents()
+      console.log("deleted student")
+    })
+    .catch((error)=>{
+      console.log("Error deleting:",error)
+    })
+  }
+
+
   // State to track active tab
   const [activeTab, setActiveTab] = useState("students");
 
@@ -188,38 +289,51 @@ export default function InstructorDashBoard() {
               <>
                 {/* top-performing-students */}
                 <Card className="m-1 p-1">
-                  <CardTitle className="m-1 p-1">Studenets Enrolled</CardTitle>
+                  {/* <CardTitle className="m-1 p-1">Students Enrolled</CardTitle> */}
+                  <Row className="my-btnflex">
+                    <Col><h2>Students Enrolled</h2></Col>
+                    <Col>
+                    <Button as= {Link} to="/add-student">Add Student</Button>
+                    </Col>
+                  </Row>
                   <Col className="p-2">
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Student</th>
-                          <th scope="col">Course</th>
-                          <th scope="col">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <table>
+                    <thead>
+                      <tr>
+                      <th className="border px-4 py-2 text-left">S/N</th>
+                      <th className="border px-4 py-2 text-left">Student Name</th>
+                      <th className="border px-4 py-2 text-left">Email</th>
+                      <th className="border px-4 py-1 text-left">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      { students.map((student, index)=>{
+                        return (
+                          <tr>
+                            <td className="border px-4 py-2">{index + 1}</td>
+                            <td className="border px-4 py-2">{student.name}</td>
+                            <td className="border px-4 py-2">{student.email}</td>
+                            <td className="border px-4 py-2">
+                              <Row>
+                                <Col>
+                                   <Link to = {`/edit-student/${student.id}`}>
+                              <PencilSquareIcon className="text-success" 
+                            style={{width:"30px", height:"30px"}} />
+                            </Link>
+                                </Col>
+                                <Col>
+                                  <TrashIcon className="text-danger"
+                                  style={{width:"30px", height:"30px"}} 
+                                  onClick={(e)=>{deleteStudent(e, student.id)}}
+                                  />
+                                </Col>
+                              </Row>
+                            </td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
                   </Col>
                 </Card>
               </>
@@ -230,17 +344,46 @@ export default function InstructorDashBoard() {
                 {/* courses tab content */}
                 <div className="addCourse d-flex justify-content-between align-items-center">
                   <p>Course Performance Overview</p>
-                  <Button>Add Course</Button>
+                  <Button as = {Link} to = "/add-course" >Add Course</Button>
                 </div>
 
-                <Card className="courses-card mt-3">
-                  <CardTitle>React Development Fundamentals</CardTitle>
-                  <CardText>
-                    Course Description: <br />
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea neque
-                    repellendus cumque!
-                  </CardText>
+                 {success && (
+                              <Alert variant="success">Deleted Successfully</Alert>
+                            )}
+
+                {/* mapping through each course */}
+                {courses.map((course)=>{
+                  return (
+                  <Card className="courses-card mt-3 border border-2" key={course.id}>
+                    <Row className="justify-content-between">
+                      <Col md = {10}>
+                        <CardTitle>{course.title}</CardTitle>
+                        <CardText>{course.description}</CardText>
+                        <CardText>{course.instructorId}</CardText>
+                      </Col>
+                      {/* the second column */}
+                      <Col md = {2}>
+                        <Row className="justify-content-center">
+                          <Col> 
+                            <Link to = {`/edit-course/${course.id}`}>
+                              <PencilSquareIcon className="text-success" 
+                            style={{width:"30px", height:"30px"}} />
+                            </Link>
+                           </Col>
+                          <Col> 
+                            <TrashIcon className="text-danger" 
+                            style={{width:"30px", height:"30px"}}
+                            onClick={(e)=>deleteCourse(e,course.id)}
+                             /> 
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
                 </Card>
+                  )
+                })}
+
+                
               </>
             )}
 
@@ -248,12 +391,40 @@ export default function InstructorDashBoard() {
               <>
                 {/* assessments tab content */}
                 <Col className="user-btn mb-2">
-                  <Button> <PlusIcon style={{width:"20px", height:"20px"}} /> Create Quiz</Button>
+                  <Button as={Link} to="/create-quiz"
+                  > <PlusIcon style={{width:"20px", height:"20px"}} /> Create Quiz</Button>
                 </Col>
-                <Card className="m-2 p-2">
-                    <CardTitle>Quiz Title</CardTitle>
-                    <CardText>Quiz Description</CardText>
+                {/* mapping through quizzes */}
+                { quizzes.map((quiz)=>{
+                  return (
+                    <Card className="courses-card mt-3 border border-2" key={quiz.id}>
+                    <Row className="justify-content-between">
+                      <Col md = {10}>
+                        <CardTitle>{quiz.quizTitle}</CardTitle>
+                        <CardText> Quiz Id: {quiz.quizId}</CardText>
+                        <CardFooter> Quiz lesson Id: {quiz.lessonId}</CardFooter>
+                      </Col>
+                      {/* the second column */}
+                      <Col md = {2}>
+                        <Row className="justify-content-center">
+                          <Col> 
+                            <Link to = {`/edit-quiz/${quiz.quizId}`}>
+                              <PencilSquareIcon className="text-success" 
+                            style={{width:"30px", height:"30px"}} />
+                            </Link>
+                           </Col>
+                          <Col> 
+                            <TrashIcon className="text-danger" 
+                            style={{width:"30px", height:"30px"}}
+                            onClick={()=>deleteQuiz(quiz.quizId)}
+                             /> 
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
                 </Card>
+                  )
+                }) }
 
               </>
             )}

@@ -1,0 +1,10 @@
+table {
+    min-width: 100%;
+}
+.my-btnflex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 6px;
+    padding: 10px;
+}

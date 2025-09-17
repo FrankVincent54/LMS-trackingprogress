@@ -14,6 +14,9 @@ import {
   Row,
 } from "react-bootstrap";
 import "./admiDashboard.css";
+import AllInstructors from "../../instructor/allInstructors/Instructors";
+import AllStudents from "../../student/allStudents.jsx";
+
 
 export default function AdminDashBoard() {
   // State to track active tab
@@ -165,10 +168,10 @@ export default function AdminDashBoard() {
               </Col>
               <Col>
                 <Button
-                  variant={activeTab === "users" ? "primary" : "outline-primary"}
-                  onClick={() => setActiveTab("users")}
+                  variant={activeTab === "students" ? "primary" : "outline-primary"}
+                  onClick={() => setActiveTab("students")}
                 >
-                  Users
+                  Students
                 </Button>
               </Col>
             </Row>
@@ -196,36 +199,7 @@ export default function AdminDashBoard() {
                 <Card className="m-1 p-1">
                   <CardTitle className="m-1 p-1">Top Performing Instructors</CardTitle>
                   <Col className="p-2">
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Instructor</th>
-                          <th scope="col">Courses</th>
-                          <th scope="col">Students</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <AllInstructors />
                   </Col>
                 </Card>
               </>
@@ -236,7 +210,7 @@ export default function AdminDashBoard() {
                 {/* courses tab content */}
                 <div className="addCourse d-flex justify-content-between align-items-center">
                   <p>Course Performance Overview</p>
-                  <Button>Add Course</Button>
+                  {/* <Button>Add Course</Button> */}
                 </div>
 
                 <Card className="courses-card mt-3">
@@ -250,50 +224,13 @@ export default function AdminDashBoard() {
               </>
             )}
 
-            {activeTab === "users" && (
+            {activeTab === "students" && (
               <>
                 {/* users tab content */}
                 <Col className="user-btn mb-2">
-                  <Button>Add User</Button>
+                  <Button>Add Student</Button>
                 </Col>
-                <Card className="user-card">
-                  <Col className="m-2 p-2">
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">#</th>
-                          <th scope="col">Instructor</th>
-                          <th scope="col">Courses</th>
-                          <th scope="col">Students</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1</th>
-                          <td>Mark</td>
-                          <td>Otto</td>
-                          <td>@mdo</td>
-                          <td>Delete</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">2</th>
-                          <td>Jacob</td>
-                          <td>Thornton</td>
-                          <td>@fat</td>
-                          <td>Delete</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">3</th>
-                          <td>Larry</td>
-                          <td>the Bird</td>
-                          <td>@twitter</td>
-                          <td>Delete</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </Col>
-                </Card>
+                <AllStudents />
               </>
             )}
           </Col>
